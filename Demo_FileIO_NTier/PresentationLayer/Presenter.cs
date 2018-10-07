@@ -34,7 +34,7 @@ namespace Demo_FileIO_NTier.PresentationLayer
             Console.Clear();
             Console.WriteLine();
             Console.WriteLine($"\t\t{headerText}");
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
         /// <summary>
