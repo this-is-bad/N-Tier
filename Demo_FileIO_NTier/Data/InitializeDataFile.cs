@@ -22,7 +22,7 @@ namespace Demo_FileIO_NTier.Data
         /// <returns>List of Characters</returns>
         private static IEnumerable<Character> InitializeCharacter()
         {
-            List<Character> initCharacterList = new List<Character>
+            IEnumerable<Character> initCharacterList = new List<Character>
             {
                 new Character
                 {

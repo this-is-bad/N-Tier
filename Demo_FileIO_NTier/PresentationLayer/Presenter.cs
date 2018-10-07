@@ -105,12 +105,14 @@ namespace Demo_FileIO_NTier.PresentationLayer
             string message;
 
             List<Character> characters = _charactersBLL.GetCharacters(out success, out message) as List<Character>;
-            characters = characters.OrderBy(c => c.Id).ToList();
+           
 
             DisplayHeader("List of Characters");
 
             if (success)
             {
+                characters = characters.OrderBy(c => c.Id).ToList();
+
                 DisplayCharacterTable(characters);
             }
             else

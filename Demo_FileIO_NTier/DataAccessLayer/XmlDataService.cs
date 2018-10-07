@@ -25,7 +25,7 @@ namespace Demo_FileIO_NTier.DataAccessLayer
         /// <returns>list of characters</returns>
         public IEnumerable<Character> ReadAll()
         {
-            List<Character> characters = new List<Character>();
+            IEnumerable<Character> characters = new List<Character>();
             XmlSerializer serializer = new XmlSerializer(typeof(List<Character>), new XmlRootAttribute("Characters"));
 
             try
