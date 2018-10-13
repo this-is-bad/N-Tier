@@ -4,41 +4,46 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using Demo_FileIO_NTier.Data;
 using Demo_FileIO_NTier.Models;
-using Demo_FileIO_NTier.DataAccessLayer;
+using Newtonsoft;
+using Newtonsoft.Json;
 
 namespace Demo_FileIO_NTier.DataAccessLayer
 {
-    public class XmlDataService : IDataService
+    class JsonDataService : IDataService
     {
         private string _dataFilePath;
 
-        public XmlDataService()
+        public JsonDataService()
         {
             _dataFilePath = DataSettings.dataFilePath;
         }
 
-        public XmlDataService(string dataFilePath)
+        public JsonDataService(string dataFilePath)
         {
             _dataFilePath = dataFilePath;
         }
 
         /// <summary>
-        /// Read the XML file and load a list of character objects
+        /// Read the JSON file and load a list of character objects
         /// </summary>
         /// <returns>list of characters</returns>
         public IEnumerable<Character> ReadAll()
         {
-            IEnumerable<Character> characters = new List<Character>();
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Character>), new XmlRootAttribute("Characters"));
+            List<Character> characters = new List<Character>();
+            //JsonSerializer serializer = new JsonSerializer();
 
             try
             {
-                StreamReader reader = new StreamReader(_dataFilePath);
-                using (reader)
+                StreamReader sr = new StreamReader(_dataFilePath);
+                using (sr)
                 {
-                    characters = (List<Character>)serializer.Deserialize(reader);
+                    string jsonString = sr.ReadToEnd();
+                    Characters characterList = JsonConvert.DeserializeObject<RootObject>(jsonString).Characters;
+
+                    characters = characterList.Character;
+                    //characters = (List<Character>)serializer.Deserialize(reader);
                 }
 
             }
@@ -51,20 +56,24 @@ namespace Demo_FileIO_NTier.DataAccessLayer
         }
 
         /// <summary>
-        /// write the current list of characters to the XML data file
+        /// write the current list of characters to the JSON data file
         /// </summary>
         /// <param name="characters">list of characters</param>
         public void WriteAll(IEnumerable<Character> characters)
         {
-        
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Character>), new XmlRootAttribute("Characters"));
+
+            RootObject rootObject = new RootObject();
+            rootObject.Characters = new Characters();
+            rootObject.Characters.Character = characters as List<Character>;
+
+            string jsonString = JsonConvert.SerializeObject(rootObject);
 
             try
             {
                 StreamWriter writer = new StreamWriter(_dataFilePath);
                 using (writer)
                 {
-                    serializer.Serialize(writer, characters);
+                    writer.WriteLine(jsonString);
                 }
             }
             catch (Exception)

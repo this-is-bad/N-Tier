@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Demo_FileIO_NTier.Data;
 using Demo_FileIO_NTier.DataAccessLayer;
 using Demo_FileIO_NTier.Models;
 
@@ -31,6 +32,7 @@ namespace Demo_FileIO_NTier.BusinessLogicLayer
             message = "";
             try
             {
+                //_dataService.WriteAll(InitializeDataFile.InitializeCharacter());
                 _characters = _dataService.ReadAll() as List<Character>;
                 _characters.OrderBy(c => c.Id);
 

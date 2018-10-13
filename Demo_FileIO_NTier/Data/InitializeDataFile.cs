@@ -10,9 +10,9 @@ namespace Demo_FileIO_NTier.Data
 {
 
     /// <summary>
-    /// Data connection class, XML
+    /// Data connection class
     /// </summary>
-    public class InitializeDataFileXml
+    public class InitializeDataFile
     {
         #region METHODS
 
@@ -20,7 +20,7 @@ namespace Demo_FileIO_NTier.Data
         /// Initialize the list of Characters 
         /// </summary>
         /// <returns>List of Characters</returns>
-        private static IEnumerable<Character> InitializeCharacter()
+        public static IEnumerable<Character> InitializeCharacter()
         {
             IEnumerable<Character> initCharacterList = new List<Character>
             {
@@ -117,12 +117,12 @@ namespace Demo_FileIO_NTier.Data
         /// <summary> 
         /// save a dummy Character to the persistent data file
         /// </summary>
-        public static void SeedDataFile()
-        {
-            XmlDataService xmlDataService = new XmlDataService();
+        //public static void SeedDataFile()
+        //{
+        //    XmlDataService xmlDataService = new XmlDataService();
 
-            xmlDataService.WriteAll(InitializeCharacter());
-        }
+        //    xmlDataService.WriteAll(InitializeCharacter());
+        //}
 
         #endregion
     }
