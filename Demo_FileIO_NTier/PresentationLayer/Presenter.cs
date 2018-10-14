@@ -122,5 +122,78 @@ namespace Demo_FileIO_NTier.PresentationLayer
 
             DisplayContinuePrompt();
         }
+
+        /// <summary>
+        /// prompt the user to select a data source and return the choice
+        /// </summary>
+        /// <returns>int</returns>
+        public int DisplayGetDataTypeChoice()
+        {
+            Console.WriteLine("Choose a data source");
+
+            int result = 2;
+            bool usingMenu = true;
+
+            while (usingMenu)
+            {
+
+                Console.CursorVisible = false;
+
+                //
+                // display the menu
+                //
+                Console.WriteLine("\n\n" + "Please type the number of your menu choice.");
+
+                Console.Write(
+                 "\t" + "1. CSV" + Environment.NewLine +
+                 "\t" + "2. XML" + Environment.NewLine +
+                 "\t" + "3. JSON" + Environment.NewLine +
+                 "\t" + "E. Exit" + Environment.NewLine);
+
+
+                //
+                // get and process the user's response
+                // note: ReadKey argument set to "true" disables the echoing of the key press
+                //
+                ConsoleKeyInfo userResponse = Console.ReadKey(true);
+                switch (userResponse.KeyChar)
+                {
+                    case '1':
+                        result = int.Parse(userResponse.ToString());
+                        usingMenu = false;
+                        break;
+                    case '2':
+                        result = int.Parse(userResponse.ToString());
+                        usingMenu = false;
+                        break;
+                    case '3':
+                        result = int.Parse(userResponse.ToString());
+                        usingMenu = false;
+                        break;
+                    case 'E':
+                    case 'e':
+                        DisplayClosingScreen();
+                        usingMenu = false;
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine(
+                            "It appears you have selected an incorrect choice." + Environment.NewLine +
+                            "XML has been automatically selected as the data type." + Environment.NewLine +
+                            "Press any key to continue.");
+
+                        userResponse = Console.ReadKey(true);
+                        if (userResponse.Key == ConsoleKey.Escape)
+                        {
+                            usingMenu = false;
+                        }
+                        break;
+                }
+            }
+            Console.CursorVisible = true;
+
+            return result;
+        }
+
     }
 }
